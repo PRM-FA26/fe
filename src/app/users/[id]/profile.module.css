@@ -1,0 +1,222 @@
+.page {
+  padding: var(--spacing-2xl) 0;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  background: var(--surface-brand);
+  border: 1px solid var(--border-brand);
+  border-radius: var(--radius-3xl);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.profileHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, transparent, var(--color-primary-brand), transparent);
+}
+
+.avatarWrap {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 6px solid var(--surface-elevated);
+  box-shadow: 0 0 25px var(--color-primary-glow);
+}
+
+.avatarFallback {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--color-surface-elevated);
+  border: 4px solid var(--border-brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+}
+
+.headerInfo {
+  width: 100%;
+  max-width: 600px;
+  z-index: 1;
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.roleBadge {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-brand);
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.username {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary-brand);
+  margin-bottom: var(--spacing-md);
+}
+
+.bio {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+  font-style: italic;
+}
+
+.statsRow {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-md);
+  background: var(--surface-elevated);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-brand);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 100px;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.followBtn {
+  margin-top: var(--spacing-md);
+  padding: 0.75rem 2.5rem;
+  border-radius: var(--radius-full);
+}
+
+/* Stories */
+.storiesSection {
+  margin-top: var(--spacing-2xl);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-brand);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-3xl) 0;
+  color: var(--color-text-muted);
+}
+
+.gridStories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+@media (max-width: 640px) {
+  .gridStories {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
+    gap: var(--spacing-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .profileHeader {
+    flex-direction: row !important;
+    text-align: left !important;
+    align-items: center !important;
+    padding: var(--spacing-3xl) !important;
+    gap: var(--spacing-2xl) !important;
+  }
+
+  .avatarWrap {
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  .headerInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nameRow {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100%;
+  }
+
+  .statsRow {
+    justify-content: flex-start !important;
+    width: 100%;
+    margin-right: auto;
+  }
+}

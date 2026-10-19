@@ -1,0 +1,88 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Bell, Check, CheckCheck } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { vi } from "date-fns/locale";
+import { isLoggedIn } from "@/lib/auth";
+import { useNotifications } from "@/contexts/NotificationContext";
+
+export default function NotificationsPage() {
+  const router = useRouter();
+  const { notifications, unreadCount, markAsRead, markAllAsRead, loading } = useNotifications();
+
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+    }
+  }, [router]);
+
+  return (
+    <div className="container py-12">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="flex items-center gap-2 font-heading text-2xl font-extrabold text-text-primary">
+          <Bell size={24} /> Thông báo
+          {unreadCount > 0 && (
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-500 text-white font-bold ml-2">
+              {unreadCount} chưa đọc
+            </span>
+          )}
+        </h1>
+        {unreadCount > 0 && (
+          <button
+            className="btn btn-outline btn-sm sm:btn-md border-emerald-500/20 hover:bg-emerald-500/5 text-emerald-500 flex items-center gap-2"
+            onClick={markAllAsRead}
+          >
+            <CheckCheck size={18} /> Đánh dấu đã đọc tất cả
+          </button>
+        )}
+      </div>
+
+      {loading ? (
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="skeleton h-20 rounded-2xl w-full" />
+          ))}
+        </div>
+      ) : notifications.length === 0 ? (
+        <div className="flex flex-col items-center gap-4 py-24 text-text-muted">
+          <Bell size={48} />
+          <p>Chưa có thông báo nào</p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-[2px] border border-border-brand/50 rounded-2xl overflow-hidden shadow-sm">
+          {notifications.map((n) => (
+            <div
+              key={n.id}
+              className={`flex items-center gap-4 p-4 transition-colors duration-200 ${
+                !n.isRead
+                  ? "bg-emerald-500/5 border-l-4 border-emerald-500"
+                  : "bg-surface-brand/80 hover:bg-surface-elevated"
+              }`}
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-text-primary mb-0.5">{n.title}</p>
+                <p className="text-sm text-text-primary mb-1 leading-relaxed">
+                  {n.message}
+                </p>
+                <span className="text-xs text-text-muted">
+                  {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true, locale: vi })}
+                </span>
+              </div>
+              {!n.isRead && (
+                <button
+                  className="shrink-0 text-text-muted hover:text-emerald-500 transition-colors p-2 hover:bg-emerald-500/10 rounded-lg"
+                  onClick={() => markAsRead(n.id)}
+                  title="Đánh dấu đã đọc"
+                >
+                  <Check size={20} />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
